@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marathon Training Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .week {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .day {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .day input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .progress {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background-color: #4caf50;
+            width: 0;
+            transition: width 0.5s;
+        }
+
+        .progress-bar-container {
+            background-color: #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Marathon Training Tracker</h1>
+    <div id="weeks"></div>
+
+    <div class="progress">
+        <h2>Progress</h2>
+        <div class="progress-bar-container">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+        <p id="progress-text">0% Complete</p>
+    </div>
+
+    <script>
+        const trainingSchedule = [
+            { week: 1, title: "Consistent running schedule", days: [
+                { day: "Monday", description: "3 miles EZ" },
+                { day: "Tuesday", description: "REST" },
+                { day: "Wednesday", description: "4 miles EZ" },
+                { day: "Thursday", description: "REST" },
+                { day: "Friday", description: "3 miles EZ" },
+                { day: "Saturday", description: "5 miles EZ" },
+                { day: "Sunday", description: "REST" }
+            ] },
+            {week: 2, title: "Consistent running schedule", days: [
+                { day: "Monday", description: "3 miles EZ" },
+                { day: "Tuesday", description: "1 mile warmup, (3×1 mile EZ) with 3 minutes of rest in between each mile. Get acclimated to the feeling of running intervals." },
+                { day: "Wednesday", description: "4 miles EZ" },
+                { day: "Thursday", description: "REST" },
+                { day: "Friday", description: "3 miles EZ" },
+                { day: "Saturday", description: "6 miles EZ" },
+                { day: "Sunday", description: "REST" }
+            ] },
+            {week: 3, title: "Consistent running schedule", days: [
+                { day: "Monday", description: "4 miles EZ" },
+                { day: "Tuesday", description: "1 mile warmup, 8×400 meters (1 lap on a track) with 2 minutes of rest in between. *If no track*: 6x90seconds with 2 minutes of rest in between. 1 mile cooldown" },
+                { day: "Wednesday", description: "6 miles EZ" },
+                { day: "Thursday", description: "REST" },
+                { day: "Friday", description: "4 miles EZ" },
+                { day: "Saturday", description: "8 miles EZ" },
+                { day: "Sunday", description: "REST" }
+            ] },
+            {week: 4, title: "Consistent running schedule", days: [
+                { day: "Monday", description: "5 miles EZ" },
+                { day: "Tuesday", description: "1 mile warmup, 2×2 miles with 3 minutes of rest (The pace for each 2 mile rep should be faster than EZ pace but manageable.) 1 mile cooldown." },
+                { day: "Wednesday", description: "8 miles EZ" },
+                { day: "Thursday", description: "REST" },
+                { day: "Friday", description: "4 miles EZ" },
+                { day: "Saturday", description: "10 miles EZ" },
+                { day: "Sunday", description: "REST" }
+            ] },
+            {week: 5, title: "Consistent running schedule", days: [
+                { day: "Monday", description: "5 miles EZ" },
+                { day: "Tuesday", description: "2 mile warmup, 4 miles tempo (about 30-40 seconds slower than your 5K PR pace). This should feel pretty difficult. 2 mile cooldown" },
+                { day: "Wednesday", description: "8 miles EZ" },
+                { day: "Thursday", description: "REST" },
+                { day: "Friday", description: "5 miles EZ" },
+                { day: "Saturday", description: "13 miles EZ" },
+                { day: "Sunday", description: "REST" }
+            ] },
+            {week: 6, title: "Consistent running schedule", days: [
+                { day: "Monday", description: "6 miles EZ" },
+                { day: "Tuesday", description: "1 mile warmup, 4×1 mile with 3 minutes of rest in between each mile, 1 mile cooldown. (Each 1 mile rep should be around your tempo pace. Should feel difficult but manageable)" },
+                { day: "Wednesday", description: "8 miles EZ" },
+                { day: "Thursday", description: "REST" },
+                { day: "Friday", description: "3 miles EZ" },
+                { day: "Saturday", description: "12 miles EZ" },
+                { day: "Sunday", description: "REST" }
+            ] },
+            {week: 7, title: "Consistent running schedule", days: [
+                { day: "Monday", description: "6 miles EZ" },
+                { day: "Tuesday", description: "2 mile, 3×2 mile with 3 minute rest (pace should be difficult but manageable), 2 mile cooldown" },
+                { day: "Wednesday", description: "9 miles EZ" },
+                { day: "Thursday", description: "REST" },
+                { day: "Friday", description: "4 miles EZ" },
+                { day: "Saturday", description: "15 miles EZ" },
+                { day: "Sunday", description: "REST" }
+            ] },
+            {week: 8, title: "Consistent running schedule", days: [
+                { day: "Monday", description: "6 miles EZ" },
+                { day: "Tuesday", description: "2 mile warmup, 8×400 meters (pace should be difficult) with 2 minutes of rest, 2 mile cooldown" },
+                { day: "Wednesday", description: "10 miles EZ" },
+                { day: "Thursday", description: "REST" },
+                { day: "Friday", description: "4 miles EZ" },
+                { day: "Saturday", description: "18 miles EZ" },
+                { day: "Sunday", description: "REST" }
+            ] },
+            {week: 9, title: "Consistent running schedule", days: [
+                { day: "Monday", description: "5 miles EZ" },
+                { day: "Tuesday", description: "1 mile warmup, 5×1 mile (Pace should be difficult) with 2 minutes of rest, 1 mile cooldown" },
+                { day: "Wednesday", description: "12 miles EZ" },
+                { day: "Thursday", description: "REST" },
+                { day: "Friday", description: "3 miles EZ" },
+                { day: "Saturday", description: "20 miles EZ" },
+                { day: "Sunday", description: "REST" }
+            ] },
+            {week: 10, title: "Consistent running schedule", days: [
+                { day: "Monday", description: "4 miles EZ" },
+                { day: "Tuesday", description: "1 mile warmup, 3×2 mile (About 40 seconds slower than your 5k PR pace) with 3 minutes of rest, 1 mile cooldown" },
+                { day: "Wednesday", description: "10 miles EZ" },
+                { day: "Thursday", description: "REST" },
+                { day: "Friday", description: "REST" },
+                { day: "Saturday", description: "16 miles EZ" },
+                { day: "Sunday", description: "REST" }
+            ] },
+            {week: 11, title: "Consistent running schedule", days: [
+                { day: "Monday", description: "4 miles EZ" },
+                { day: "Tuesday", description: "1 mile warmup, 6X400 meters (Should feel difficult) with 2 minutes of rest, 1 mile cooldown" },
+                { day: "Wednesday", description: "6 miles EZ" },
+                { day: "Thursday", description: "REST" },
+                { day: "Friday", description: "4 miles EZ" },
+                { day: "Saturday", description: "13 miles EZ" },
+                { day: "Sunday", description: "REST" }
+            ] },
+            { week: 12, title: "Race Week!", days: [
+                { day: "Monday", description: "4 miles EZ" },
+                { day: "Tuesday", description: "REST" },
+                { day: "Wednesday", description: "5 miles EZ" },
+                { day: "Thursday", description: "3 miles EZ" },
+                { day: "Friday", description: "REST" },
+                { day: "Saturday", description: "3 miles EZ" },
+                { day: "Sunday", description: "26.2 miles! RACE DAY" }
+            ] }
+        ];
+
+        const weeksContainer = document.getElementById("weeks");
+        const progressBar = document.getElementById("progress-bar");
+        const progressText = document.getElementById("progress-text");
+        let completedCount = 0;
+        let totalDays = trainingSchedule.reduce((sum, week) => sum + week.days.length, 0);
+
+        trainingSchedule.forEach(week => {
+            const weekDiv = document.createElement("div");
+            weekDiv.classList.add("week");
+
+            const weekTitle = document.createElement("h2");
+            weekTitle.textContent = `Week ${week.week}: ${week.title}`;
+            weekDiv.appendChild(weekTitle);
+
+            week.days.forEach(day => {
+                const dayDiv = document.createElement("div");
+                dayDiv.classList.add("day");
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.addEventListener("change", () => {
+                    if (checkbox.checked) {
+                        dayLabel.classList.add("completed");
+                        completedCount++;
+                    } else {
+                        dayLabel.classList.remove("completed");
+                        completedCount--;
+                    }
+                    updateProgress();
+                });
+
+                const dayLabel = document.createElement("label");
+                dayLabel.textContent = `${day.day}: ${day.description}`;
+
+                dayDiv.appendChild(checkbox);
+                dayDiv.appendChild(dayLabel);
+                weekDiv.appendChild(dayDiv);
+            });
+
+            weeksContainer.appendChild(weekDiv);
+        });
+
+        function updateProgress() {
+            const percentage = Math.round((completedCount / totalDays) * 100);
+            progressBar.style.width = `${percentage}%`;
+            progressText.textContent = `${percentage}% Complete`;
+        }
+    </script>
+</body>
+</html>
