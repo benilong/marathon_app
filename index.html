@@ -243,7 +243,7 @@
       const weeksContainer = document.getElementById("weeks");
       const progressBar = document.getElementById("progress-bar");
       const progressText = document.getElementById("progress-text");
-      let completedCount;
+      
       let totalDays = trainingSchedule.reduce(
         (sum, week) => sum + week.days.length,
         0
@@ -273,18 +273,18 @@
           
           if (checkbox.checked) {
           dayLabel.classList.add("completed");
-          completedCount++;
+          
           }
           
           checkbox.addEventListener("change", () => {
             if (checkbox.checked) {
             dayLabel.classList.add("completed");
             store.set(checkboxId, true);
-            completedCount++;
+            
             } else {
             dayLabel.classList.remove("completed");
             store.set(checkboxId, false);
-            completedCount--;
+            
             }
             
             });
