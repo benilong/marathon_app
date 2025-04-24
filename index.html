@@ -243,7 +243,7 @@
       const weeksContainer = document.getElementById("weeks");
       const progressBar = document.getElementById("progress-bar");
       const progressText = document.getElementById("progress-text");
-      let completedCount = 0;
+      let completedCount;
       let totalDays = trainingSchedule.reduce(
         (sum, week) => sum + week.days.length,
         0
@@ -286,7 +286,7 @@
             store.set(checkboxId, false);
             completedCount--;
             }
-            updateProgress();
+            
             });
 
 
@@ -301,10 +301,15 @@
       });
 
       function updateProgress() {
-        const percentage = Math.round((completedCount / totalDays) * 100);
+        const allCheckboxes = document.querySelectorAll("input[type='checkbox']");
+        const checkedCount = Array.from(allCheckboxes).filter(cb => cb.checked).length;
+        const percentage = Math.round((checkedCount / totalDays) * 100);
         progressBar.style.width = `${percentage}%`;
         progressText.textContent = `${percentage}% Complete`;
-      }
+    }
+      updateProgress();
+      
+
     </script>
   </body>
 </html>
