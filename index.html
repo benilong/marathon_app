@@ -46,7 +46,7 @@
         margin: 20px 0;
       }
 
-      .progress-bar {
+.progress-bar {
   height: 20px;
   width: 0;
   background: linear-gradient(
@@ -58,12 +58,13 @@
     #00f0ff
   );
   background-size: 400% 400%;
-  animation: flameBlue 1.2s linear infinite;
+  animation: flameBlue 1.5s linear infinite, rippleFlame 2s ease-in-out infinite;
   border-radius: 4px;
   transition: width 0.5s ease-in-out;
   box-shadow: 0 0 10px rgba(0, 123, 255, 0.7),
               0 0 20px rgba(0, 43, 255, 0.5),
               0 0 30px rgba(0, 240, 255, 0.4);
+  transform-origin: left;
 }
 
 @keyframes flameBlue {
@@ -77,6 +78,16 @@
     background-position: 0% 50%;
   }
 }
+
+@keyframes rippleFlame {
+  0%, 100% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(1.03);
+  }
+}
+
 
 
 
