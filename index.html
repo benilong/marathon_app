@@ -74,7 +74,7 @@
       </div>
       <p id="progress-text">0% Complete</p>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/store.js/1.3.20/store.min.js"></script>
     <script>
       const trainingSchedule = [
         {
@@ -263,19 +263,34 @@
 
           const checkbox = document.createElement("input");
           checkbox.type = "checkbox";
-          checkbox.addEventListener("change", () => {
-            if (checkbox.checked) {
-              dayLabel.classList.add("completed");
-              completedCount++;
-            } else {
-              dayLabel.classList.remove("completed");
-              completedCount--;
-            }
-            updateProgress();
-          });
-
+          const checkboxId = `week${week.week}-${day.day}`;
+          checkbox.id = checkboxId;
+          
           const dayLabel = document.createElement("label");
           dayLabel.textContent = `${day.day}: ${day.description}`;
+          checkbox.checked = store.get(checkboxId) || false;
+          
+          
+          if (checkbox.checked) {
+          dayLabel.classList.add("completed");
+          completedCount++;
+          }
+          
+          checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+            dayLabel.classList.add("completed");
+            store.set(checkboxId, true);
+            completedCount++;
+            } else {
+            dayLabel.classList.remove("completed");
+            store.set(checkboxId, false);
+            completedCount--;
+            }
+            updateProgress();
+            });
+
+
+          
 
           dayDiv.appendChild(checkbox);
           dayDiv.appendChild(dayLabel);
