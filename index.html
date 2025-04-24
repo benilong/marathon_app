@@ -18,20 +18,27 @@
         text-align: center;
       }
       h1 {
-  font-size: 3rem;
+  font-size: 2rem; /* smaller size */
   text-align: center;
   letter-spacing: 2px;
   text-transform: uppercase;
+
   background: linear-gradient(90deg, #00f0ff, #006aff, #00f0ff);
   background-size: 200% auto;
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
+
   animation: flameText 3s linear infinite, flickerText 1.5s ease-in-out infinite;
+
   text-shadow:
-    0 0 5px #00f0ff,
-    0 0 10px #00cfff,
-    0 0 20px #007bff;
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000,
+     0 0 8px #00f0ff,
+     0 0 16px #00cfff,
+     0 0 24px #007bff;
 }
 
 @keyframes flameText {
@@ -46,17 +53,26 @@
 @keyframes flickerText {
   0%, 100% {
     text-shadow:
-      0 0 5px #00f0ff,
-      0 0 10px #00cfff,
-      0 0 20px #007bff;
+      -1px -1px 0 #000,
+       1px -1px 0 #000,
+      -1px  1px 0 #000,
+       1px  1px 0 #000,
+       0 0 8px #00f0ff,
+       0 0 16px #00cfff,
+       0 0 24px #007bff;
   }
   50% {
     text-shadow:
-      0 0 8px #00bfff,
-      0 0 16px #00aaff,
-      0 0 30px #0055ff;
+      -1px -1px 0 #000,
+       1px -1px 0 #000,
+      -1px  1px 0 #000,
+       1px  1px 0 #000,
+       0 0 12px #00bfff,
+       0 0 20px #00aaff,
+       0 0 32px #0055ff;
   }
 }
+
 
 
       .week {
