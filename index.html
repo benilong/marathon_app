@@ -9,12 +9,12 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         margin: 0;
         padding: 0;
-        background: linear-gradient(180deg, #fff8e1, #ffe0b2);
+        background: linear-gradient(180deg, #ffeef3, #fbd6e3);
         color: #333;
       }
 
       header {
-        background: #ff6f00;
+        background: #ec407a;
         color: white;
         padding: 1rem;
         text-align: center;
@@ -42,7 +42,7 @@
       .week {
         margin-bottom: 20px;
         padding: 1rem;
-        border-left: 5px solid #ff9800;
+        border-left: 5px solid #f06292;
         background: #fff;
         border-radius: 8px;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -51,7 +51,7 @@
       .week h2 {
         margin-top: 0;
         font-size: 1.2rem;
-        color: #e65100;
+        color: #ad1457;
       }
 
       .day {
@@ -67,7 +67,7 @@
 
       .day input[type="checkbox"] {
         margin-right: 0.75rem;
-        accent-color: #ff6f00;
+        accent-color: #ec407a;
       }
 
       .completed {
@@ -82,7 +82,7 @@
 
       .progress h2 {
         margin-bottom: 1rem;
-        color: #ff6f00;
+        color: #ec407a;
       }
 
       .progress-bar-container {
@@ -98,7 +98,7 @@
       .progress-bar {
         height: 100%;
         width: 0;
-        background: linear-gradient(90deg, #ff9800, #ff5722);
+        background: linear-gradient(90deg, #f48fb1, #ec407a);
         transition: width 0.4s ease;
       }
 
@@ -143,7 +143,7 @@
         const [tue, wed, thu, sat, sun] = weeks[i];
         return {
           week: i + 1,
-          title: "From visual plan",
+          title: "",
           days: [
             { day: "Monday", description: "Rest" },
             { day: "Tuesday", description: tue },
