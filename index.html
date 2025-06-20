@@ -6,139 +6,123 @@
     <title>Half Marathon Training Tracker</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background-image: linear-gradient(180deg, yellow,orange,red);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(180deg, #fff8e1, #ffe0b2);
         color: #333;
       }
-      
-      h2 {
+
+      header {
+        background: #ff6f00;
+        color: white;
+        padding: 1rem;
         text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
+
       h1 {
+        margin: 0;
         font-size: 2rem;
-        text-align: center;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        background: linear-gradient(90deg, #00f0ff, #006aff, #00f0ff);
-        background-size: 200% auto;
-        color: transparent;
-        background-clip: text;
-        -webkit-background-clip: text;
-        animation: flameText 3s linear infinite, flickerText 1.5s ease-in-out infinite;
-        text-shadow:
-          -1px -1px 0 #000,
-           1px -1px 0 #000,
-          -1px  1px 0 #000,
-           1px  1px 0 #000,
-           0 0 8px #ff6600,
-           0 0 16px #ff3300,
-           0 0 24px #ff0000;
+        letter-spacing: 1px;
       }
 
-      @keyframes flameText {
-        0% { background-position: 0% center; }
-        100% { background-position: 200% center; }
+      .subtitle {
+        font-size: 1rem;
+        font-weight: 300;
+        margin-top: 0.5rem;
       }
 
-      @keyframes flickerText {
-        0%, 100% {
-          text-shadow:
-            -1px -1px 0 #000,
-             1px -1px 0 #000,
-            -1px  1px 0 #000,
-             1px  1px 0 #000,
-             0 0 8px #ff6600,
-             0 0 16px #ff3300,
-             0 0 24px #ff0000;
-        }
-        50% {
-          text-shadow:
-            -1px -1px 0 #000,
-             1px -1px 0 #000,
-            -1px  1px 0 #000,
-             1px  1px 0 #000,
-             0 0 12px #ff9933,
-             0 0 20px #ff6600,
-             0 0 32px #cc3300;
-        }
+      main {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 1rem;
       }
 
       .week {
         margin-bottom: 20px;
-        padding: 10px;
-        border: 1px solid #070808;
+        padding: 1rem;
+        border-left: 5px solid #ff9800;
+        background: #fff;
         border-radius: 8px;
-        background: #e1f4f5;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      }
+
+      .week h2 {
+        margin-top: 0;
+        font-size: 1.2rem;
+        color: #e65100;
       }
 
       .day {
         display: flex;
         align-items: center;
-        margin-bottom: 8px;
+        padding: 0.25rem 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .day:last-child {
+        border-bottom: none;
       }
 
       .day input[type="checkbox"] {
-        margin-right: 10px;
+        margin-right: 0.75rem;
+        accent-color: #ff6f00;
       }
 
       .completed {
         text-decoration: line-through;
-        color: gray;
+        color: #aaa;
       }
 
       .progress {
         text-align: center;
-        margin: 20px 0;
+        margin: 3rem 0;
       }
 
-      .progress-bar {
-        height: 20px;
-        width: 0;
-        background: linear-gradient(45deg, #00f0ff, #007bff, #002bff, #007bff, #00f0ff);
-        background-size: 400% 400%;
-        animation: flameBlue 1.5s linear infinite, rippleFlame 2s ease-in-out infinite;
-        border-radius: 4px;
-        transition: width 0.5s ease-in-out;
-        box-shadow: 0 0 10px rgba(0, 123, 255, 0.7),
-                    0 0 20px rgba(0, 43, 255, 0.5),
-                    0 0 30px rgba(0, 240, 255, 0.4);
-        transform-origin: left;
-      }
-
-      @keyframes flameBlue {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
-
-      @keyframes rippleFlame {
-        0%, 100% { transform: scaleX(1.5); }
-        50% { transform: scaleX(1.15); }
+      .progress h2 {
+        margin-bottom: 1rem;
+        color: #ff6f00;
       }
 
       .progress-bar-container {
-        background-color: #ccc;
-        border-radius: 8px;
+        background-color: #e0e0e0;
+        border-radius: 20px;
         overflow: hidden;
+        height: 24px;
         width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .progress-bar {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, #ff9800, #ff5722);
+        transition: width 0.4s ease;
+      }
+
+      #progress-text {
+        margin-top: 0.5rem;
+        font-weight: bold;
       }
     </style>
   </head>
   <body>
-    <h1>Half Marathon Training Tracker</h1>
-    <h2>Easy: 8:15 - 8:30</h2>
-    <h2>Saturdays: 7:30 - 7:45</h2>
-    <div id="weeks"></div>
-
-    <div class="progress">
-      <h2>Progress</h2>
-      <div class="progress-bar-container">
-        <div id="progress-bar" class="progress-bar"></div>
+    <header>
+      <h1>Half Marathon Training Tracker</h1>
+      <div class="subtitle">Easy: 8:15 - 8:30 | Saturdays: 7:30 - 7:45</div>
+    </header>
+    <main>
+      <div id="weeks"></div>
+      <div class="progress">
+        <h2>Progress</h2>
+        <div class="progress-bar-container">
+          <div id="progress-bar" class="progress-bar"></div>
+        </div>
+        <p id="progress-text">0% Complete</p>
       </div>
-      <p id="progress-text">0% Complete</p>
-    </div>
-
+    </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/store.js/1.3.20/store.min.js"></script>
     <script>
       const trainingSchedule = Array.from({ length: 12 }, (_, i) => {
